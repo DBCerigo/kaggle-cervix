@@ -5,6 +5,7 @@ backports.shutil-get-terminal-size==1.0.0
 bleach==2.0.0
 certifi==2017.4.17
 configparser==3.5.0
+cycler==0.10.0
 decorator==4.0.11
 entrypoints==0.2.2
 enum34==1.1.6
@@ -21,6 +22,7 @@ jupyter-client==5.0.1
 jupyter-console==5.1.0
 jupyter-core==4.3.0
 MarkupSafe==1.0
+matplotlib==2.0.2
 mistune==0.7.4
 nbconvert==5.1.1
 nbformat==4.3.0
@@ -45,6 +47,7 @@ scandir==1.5
 simplegeneric==0.8.1
 singledispatch==3.4.0.3
 six==1.10.0
+subprocess32==3.2.7
 terminado==0.6
 testpath==0.3
 tornado==4.5.1
