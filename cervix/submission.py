@@ -22,12 +22,8 @@ def compute_losses(sub_csv_or_df):
     print('Use: `df.sort_values(\'log_l\', ascending=False)` to order by log_l')
     return score, df
 
-def write_submission_file(path, ids, preds):
-    """Write a submission file using the predictions returned from random forest
-    and ids returns from random_forest_transform"""
-    with open(path, 'w') as csv_f:
-        writer = csv.writer(csv_f)
-        writer.writerow(['image_name','Type_1','Type_2','Type_3'])
-        for i,row in enumerate(preds):
-            path = [ids[i]+'.jpg']
-            writer.writerow(path+list(row))
+def write_submission_file(path, df):
+    """Write a submission file from a df with predictions appended"""
+    df['image_name'] = df.path.map(lambda x: os.path.basename(x))
+    df.to_csv(path, columns=['image_name','Type_1','Type_2','Type_3'],
+                index=False)
