@@ -54,14 +54,15 @@ def resize_100(path):
     rescaled = cv2.resize(img, (100, 100), cv2.INTER_LINEAR)
     return save_img(rescaled, resize_100_path)
 
-def random_forest_transform(df, img_path_column, grayscale=True, test=False):
+def random_forest_transform(df, img_path_column, grayscale=None, test=False):
     vecs = []
     types = []
     ids = []
+    assert isinstance(grayscale, (bool)), 'grayscale must be set to a bool'
     imread_opt = 0 if grayscale else 1 # 1 is 3chan rbg, 0 is grayscale
     for _, row in df.iterrows():
-        gray = cv2.imread(row.grayscale_resize_path, imread_opt)
-        vec = process_image(gray)
+        img = cv2.imread(row[img_path_column], imread_opt)
+        vec = process_image(img)
         if not test:
             cervix_type = row.type
             types.append(cervix_type[-1])
