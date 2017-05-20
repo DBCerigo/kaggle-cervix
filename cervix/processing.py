@@ -60,7 +60,13 @@ def random_forest_transform(df, img_path_column, grayscale=None):
     path_to_vec = lambda x: process_image(cv2.imread(x,imread_opt))
     df['vec'] = df[img_path_column].map(path_to_vec)
     return df
-                              
+
+def append_probabilities(orig_df, preds, type_order):
+    columns = ['Type_'+t for t in type_order]
+    index = orig_df.index.values
+    probs_df = pd.DataFrame.from_records(preds, index=index, columns=columns)
+    return orig_df.join(probs_df)
+
 def process_image(img):
     """Normalize image and turn into array of one long column"""
     normalized = cv2.normalize(img, None, 0, 1, cv2.NORM_MINMAX)
