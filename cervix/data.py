@@ -28,6 +28,10 @@ def get_img_paths_for(directory, num_id_series):
             lambda id_x: base_path+directory+'/'+id_x+'.jpg')
     return s
 
+def split_df(df):
+    train, validate, test = np.split(df.sample(frac=1, random_state=12), 
+                                     [int(.6*len(df)), int(.8*len(df))])
+    return train, validate, test
 
 def check_image(path):
     print(path)
