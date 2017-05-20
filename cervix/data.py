@@ -37,5 +37,4 @@ def check_image(path):
     print(path)
     img = plt.imread(path)
     print(img.shape)
-    print(img)
     plt.imshow(img)
