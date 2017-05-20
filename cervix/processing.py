@@ -32,10 +32,27 @@ def grayscale_resize(path):
     gray_path = "../data/processed/"+desc+'/'+subdir+"/"+filename
     if os.path.exists(gray_path):
         return gray_path
+    print(filename.split('.')[0], end='.')
     img = cv2.imread(path)
     rescaled = cv2.resize(img, (100, 100), cv2.INTER_LINEAR)
     gray = cv2.cvtColor(rescaled, cv2.COLOR_RGB2GRAY).astype('float')
     return save_img(gray, gray_path)
+
+def resize_100(path):
+    desc = 'resize_100'
+
+    filename = os.path.basename(path)
+    directories = path.split('/')
+    #subdir here is either 'train' or 'test'
+    subdir = directories[2]
+
+    resize_100_path = "../data/processed/"+desc+'/'+subdir+"/"+filename
+    if os.path.exists(resize_100_path):
+        return resize_100_path
+    print(filename.split('.')[0], end='.')
+    img = cv2.imread(path)
+    rescaled = cv2.resize(img, (100, 100), cv2.INTER_LINEAR)
+    return save_img(rescaled, resize_100_path)
 
 def random_forest_transform(df, img_path_column, test=False):
     vecs = []
