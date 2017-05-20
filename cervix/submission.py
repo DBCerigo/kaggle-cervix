@@ -13,7 +13,7 @@ def _get_log_loss(row):
 def compute_losses(sub_csv_path_or_sub_df):
     if isinstance(sub_csv_path_or_sub_df, str):
         df = pd.read_csv(sub_csv_path_or_sub_df)
-    df['log_l'] = df.apply(get_log_loss, axis=1)
+    df['log_l'] = df.apply(_get_log_loss, axis=1)
     N = len(df)
     score = df.log_l.sum()/N
     df = df.sort_values('log_l', ascending=False)
