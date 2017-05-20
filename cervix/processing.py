@@ -1,31 +1,34 @@
 import cv2
 import os
 
-def _get_grayscale_img(path, rescale_dim):
-    img = cv2.imread(path)
-    rescaled = cv2.resize(img, (rescale_dim, rescale_dim), cv2.INTER_LINEAR)
-    gray = cv2.cvtColor(rescaled, cv2.COLOR_RGB2GRAY).astype('float')
-    return gray
-
-def save_img(img, num_id, desc):
-    directory ='../data/'+desc+'/'
+def save_img(img, path):
+    directory = os.path.dirname(path)
     if not os.path.exists(directory):
         os.makedirs(directory)
-    path = directory+num_id+".jpg"
     cv2.imwrite(path,img)
     return path
     
-def _save_grayscale_row(row, desc):
-    path = row.path
-    num_id = row.num_id
-    gray = _get_grayscale_img(path, 100)
-    return save_img(gray, num_id, desc)
-
-def save_grayscale(df):
-    desc = 'gray'
+def transform_save_imgs(df, transform_func):
     for index, row in df.iterrows():
-        df.loc[index,'gray_path'] = _save_grayscale_row(row,desc)
+        desc = transform_func.__name__
+        df.loc[index,desc+'_path'] = _transform_save_img(row,transform_func)
     return df
+
+def _transform_save_img(row, transform_func):
+    path = row.path
+    return transform_func(path)
+
+def grayscale_resize(path):
+    desc = 'grayscale_resize'
+
+    filename = os.path.basename(path)
+    gray_path = "../data/"+desc+"/"+filename
+    if os.path.exists(gray_path):
+        return gray_path
+    img = cv2.imread(path)
+    rescaled = cv2.resize(img, (100, 100), cv2.INTER_LINEAR)
+    gray = cv2.cvtColor(rescaled, cv2.COLOR_RGB2GRAY).astype('float')
+    return save_img(gray, gray_path)
 
 def random_forest_transform(df, test=False):
     forest_df = pd.DataFrame()
