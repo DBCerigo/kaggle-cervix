@@ -2,6 +2,7 @@
 data/*
 # exception for .gitkeepdir file to keep data dir in repo...
 !data/.gitkeepdir
+!data/dev_submission.csv
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
