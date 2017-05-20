@@ -8,8 +8,8 @@ def _log_prob(p):
     return math.log(p)
 
 def _get_log_loss(row):
-    ctype = row['Type']
-    return -_log_prob(row[ctype])
+    num_type = row['Type']
+    return -_log_prob(row['Type_'+num_type])
 
 def compute_losses(sub_csv_or_df):
     if isinstance(sub_csv_or_df, str):
