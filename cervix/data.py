@@ -10,7 +10,7 @@ def make_base_df():
     for type_base_path in sorted(glob(base_path +'/*')):
         image_paths = image_paths + glob(type_base_path + '/*')
     df = pd.DataFrame({'path':image_paths})
-    df['type'] = df.path.map(lambda x: x.split('/')[-2])
+    df['Type'] = df.path.map(lambda x: x.split('/')[-2])
     df['filetype'] = df.path.map(lambda x: x.split('.')[-1])
     df['num_id'] = df.path.map(lambda x:x.split('/')[-1].split('.')[0])
     return df

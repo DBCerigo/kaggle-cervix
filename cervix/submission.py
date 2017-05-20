@@ -11,13 +11,15 @@ def _get_log_loss(row):
     ctype = row['Type']
     return -_log_prob(row[ctype])
 
-def compute_losses(sub_csv_path_or_sub_df):
-    if isinstance(sub_csv_path_or_sub_df, str):
-        df = pd.read_csv(sub_csv_path_or_sub_df)
+def compute_losses(sub_csv_or_df):
+    if isinstance(sub_csv_or_df, str):
+        df = pd.read_csv(sub_csv_or_df)
+    else:
+        df = sub_csv_or_df
     df['log_l'] = df.apply(_get_log_loss, axis=1)
     N = len(df)
     score = df.log_l.sum()/N
-    df = df.sort_values('log_l', ascending=False)
+    print('Use: `df.sort_values(\'log_l\', ascending=False)` to order by log_l')
     return score, df
 
 def write_submission_file(path, ids, preds):
