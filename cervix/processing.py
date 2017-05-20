@@ -1,5 +1,7 @@
 import cv2
 import os
+import pandas as pd
+import numpy as np
 
 def _get_grayscale_img(path, rescale_dim):
     img = cv2.imread(path)

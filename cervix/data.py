@@ -22,6 +22,13 @@ def make_test_df():
     df['num_id'] = df.path.map(lambda x:x.split('/')[-1].split('.')[0])
     return df
 
+def get_img_paths_for(directory, num_id_series):
+    base_path = '../data/'
+    s = num_id_series.map(
+            lambda id_x: base_path+directory+'/'+id_x+'.jpg')
+    return s
+
+
 def check_image(path):
     print(path)
     img = plt.imread(path)
