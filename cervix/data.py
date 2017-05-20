@@ -15,6 +15,13 @@ def make_base_df():
     df['num_id'] = df.path.map(lambda x:x.split('/')[-1].split('.')[0])
     return df
 
+def make_test_df():
+    base_path = '../data/test'
+    image_paths = glob(base_path+'/*')
+    df = pd.DataFrame({'path':image_paths})
+    df['num_id'] = df.path.map(lambda x:x.split('/')[-1].split('.')[0])
+    return df
+
 def check_image(path):
     print(path)
     img = plt.imread(path)
