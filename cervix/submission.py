@@ -7,8 +7,6 @@ def _log_prob(p):
     return math.log(p)
 
 def _get_log_loss(row):
-    print(row)
-    print(row['Type'])
     ctype = row['Type']
     return -_log_prob(row[ctype])
 
