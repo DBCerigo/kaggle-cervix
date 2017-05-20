@@ -14,13 +14,13 @@ def save_img(img, num_id, desc):
 def _save_grayscale_row(row, desc):
     path = row.path
     num_id = row.num_id
-    gray = get_grayscale_img(path, 100)
+    gray = _get_grayscale_img(path, 100)
     return save_img(gray, num_id, desc)
 
 def save_grayscale(df):
     desc = 'gray'
     for index, row in df.iterrows():
-        df.loc[index,'gray_path'] = save_grayscale_row(row,desc)
+        df.loc[index,'gray_path'] = _save_grayscale_row(row,desc)
     return df
 
 def random_forest_transform(df, test=False):
