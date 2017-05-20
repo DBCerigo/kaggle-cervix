@@ -18,6 +18,7 @@ def _save_grayscale_row(row, desc):
     return save_img(gray, num_id, desc)
 
 def save_grayscale(df):
+    desc = 'gray'
     for index, row in df.iterrows():
         df.loc[index,'gray_path'] = _save_grayscale_row(row,desc)
     return df
