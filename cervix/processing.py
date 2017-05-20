@@ -1,3 +1,4 @@
+from __future__ import print_function
 import cv2
 import os
 import pandas as pd
@@ -36,13 +37,12 @@ def grayscale_resize(path):
     gray = cv2.cvtColor(rescaled, cv2.COLOR_RGB2GRAY).astype('float')
     return save_img(gray, gray_path)
 
-def random_forest_transform(df, test=False):
-    forest_df = pd.DataFrame()
+def random_forest_transform(df, img_path_column, test=False):
     vecs = []
     types = []
     ids = []
     for _, row in df.iterrows():
-        gray = cv2.imread(row.grayscale_resize_path)
+        gray = cv2.imread(row[img_path_column])
         vec = process_image(gray)
         if not test:
             cervix_type = row.type
