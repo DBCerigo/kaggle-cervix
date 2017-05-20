@@ -26,6 +26,6 @@ def write_submission_file(path, ids, preds):
     with open(path, 'w') as csv_f:
         writer = csv.writer(csv_f)
         writer.writerow(['image_name','Type_1','Type_2','Type_3'])
-        for i,row in enumerate(preds_probs):
+        for i,row in enumerate(preds):
             path = [ids[i]+'.jpg']
             writer.writerow(path+list(row))
