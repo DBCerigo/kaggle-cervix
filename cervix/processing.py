@@ -22,7 +22,11 @@ def grayscale_resize(path):
     desc = 'grayscale_resize'
 
     filename = os.path.basename(path)
-    gray_path = "../data/"+desc+"/"+filename
+    directories = path.split('/')
+    #subdir here is either 'train' or 'test'
+    subdir = directories[2]
+
+    gray_path = "../data/processed/"+desc+'/'+subdir+"/"+filename
     if os.path.exists(gray_path):
         return gray_path
     img = cv2.imread(path)
@@ -36,7 +40,7 @@ def random_forest_transform(df, test=False):
     types = []
     ids = []
     for _, row in df.iterrows():
-        gray = cv2.imread(row.gray_path)
+        gray = cv2.imread(row.grayscale_resize_path)
         vec = process_image(gray)
         if not test:
             cervix_type = row.type
