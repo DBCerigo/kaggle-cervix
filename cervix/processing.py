@@ -1,4 +1,5 @@
 import cv2
+import os
 
 def _get_grayscale_img(path, rescale_dim):
     img = cv2.imread(path)
@@ -7,7 +8,10 @@ def _get_grayscale_img(path, rescale_dim):
     return gray
 
 def save_img(img, num_id, desc):
-    path = '../data/'+desc+'/'+num_id+".jpg"
+    directory ='../data/'+desc+'/'
+    if not os.path.exists(directory):
+        os.makedirs(directory)
+    path = directory+num_id+".jpg"
     cv2.imwrite(path,img)
     return path
     
