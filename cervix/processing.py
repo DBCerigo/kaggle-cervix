@@ -38,21 +38,24 @@ def grayscale_resize(path):
     gray = cv2.cvtColor(rescaled, cv2.COLOR_RGB2GRAY).astype('float')
     return save_img(gray, gray_path)
 
-def resize_100(path):
-    desc = 'resize_100'
+def resize_n(n):
+    return lambda x: __resize_n(x, n)
 
+
+def __resize_n(path, n):
+    assert isinstance(n, (int)), 'n must be an int'
+    desc = 'resize_'+str(n) 
     filename = os.path.basename(path)
     directories = path.split('/')
     #subdir here is either 'train' or 'test'
     subdir = directories[2]
-
-    resize_100_path = "../data/processed/"+desc+'/'+subdir+"/"+filename
-    if os.path.exists(resize_100_path):
-        return resize_100_path
+    resize_path = "../data/processed/"+desc+'/'+subdir+"/"+filename
+    if os.path.exists(resize_path):
+        return resize_path
     print(filename.split('.')[0], end='.')
     img = cv2.imread(path)
-    rescaled = cv2.resize(img, (100, 100), cv2.INTER_LINEAR)
-    return save_img(rescaled, resize_100_path)
+    rescaled = cv2.resize(img, (n, n), cv2.INTER_LINEAR)
+    return save_img(rescaled, resize_path)
 
 def random_forest_transform(df, img_path_column, grayscale=None):
     assert isinstance(grayscale, (bool)), 'grayscale must be set to a bool'
