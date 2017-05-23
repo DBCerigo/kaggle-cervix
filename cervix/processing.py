@@ -83,12 +83,17 @@ def df_to_keras_generator(df, batch_size, grayscale=None):
     batch_features = np.zeros((batch_size, 299, 299, 3))
     batch_labels = np.zeros((batch_size, 3))
 
-    for _, row in df.iterrows():
-        onehot = np.zeros(3)
-        onehot[row['Type']-1] = 1
-        batch_features[0] = cv2.imread(row['processed_path'],imread_opt)
-        batch_labels[0] = onehot
-        yield batch_features, batch_labels
+    batch_counter = 0
+    while 1:
+        for index, row in df.iterrows():
+            onehot = np.zeros(3)
+            onehot[int(row['Type'])-1] = 1
+            batch_features[batch_counter] = cv2.imread(row['processed_path'],imread_opt)
+            batch_labels[batch_counter] = onehot
+            batch_counter += 1
+            if batch_counter == batch_size:
+                batch_counter = 0
+                yield batch_features, batch_labels
 
 def append_probabilities(orig_df, preds, type_order):
     type_columns = ['Type_'+t for t in type_order]
