@@ -81,13 +81,11 @@ def df_to_keras_generator(df, batch_size, grayscale=None):
     imread_opt = 0 if grayscale else 1 # 1 is 3chan rbg, 0 is grayscale
 
     batch_features = np.zeros((batch_size, 299, 299, 3))
-    batch_labels = np.zeros(batch_size, 1)
+    batch_labels = np.zeros((batch_size, 1))
 
     for _, row in df.iterrows():
-
         batch_features[0] = cv2.imread(row['processed_path'],imread_opt)
         batch_labels[0] = int(row['Type'])
-
         yield batch_features, batch_labels
 
 def append_probabilities(orig_df, preds, type_order):
