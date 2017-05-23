@@ -64,6 +64,14 @@ def random_forest_transform(df, img_path_column, grayscale=None):
     df['vec'] = df[img_path_column].map(path_to_vec)
     return df
 
+def df_to_keras_generator(df, grayscale=None):
+    assert isinstance(grayscale, (bool)), 'grayscale must be set to a bool'
+    imread_opt = 0 if grayscale else 1 # 1 is 3chan rbg, 0 is grayscale
+    for _, row in df.iterrows():
+        onehot = np.zeros(3)
+        onehot[int(row['Type'])-1] = 1
+        yield process_image(cv2.imread(x,imread_opt)), onehot
+
 def append_probabilities(orig_df, preds, type_order):
     type_columns = ['Type_'+t for t in type_order]
     index = orig_df.index.values

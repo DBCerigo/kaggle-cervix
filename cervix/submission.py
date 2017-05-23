@@ -23,6 +23,16 @@ def compute_losses(sub_csv_or_df):
     print('Use: `df.sort_values(\'log_l\', ascending=False)` to order by log_l')
     return score, df
 
+def keras_log_loss(y_true, y_pred):
+    clipped_y_pred = K.log(K.clip(y_pred, 1e-15, 1-1e-15))
+    return keras.losses.binary_crossentropy(y_true, clipped_y_pred)
+    #Leaving for now incase needed in future
+    #weighted_logs = K.multipy(y_true, probability_log)
+    #Need to check axis is right
+    #sum_weighted_logs = K.sum(weighted_logs, axis=1)
+    #negative_sum_weighted_logs = K.scalar_mul(-1, sum_weighted_logs)
+    #return K.mean(negative_sum_weighted_logs, axis=-1)
+
 def write_submission_file(path, df):
     """Write a submission file from a df with predictions appended"""
     df['image_name'] = df.path.map(lambda x: os.path.basename(x))
