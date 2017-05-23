@@ -12,8 +12,7 @@ def save_img(img, path):
     return path
     
 def transform_save_imgs(df, transform_func, **args):
-    for index, row in df.iterrows():
-        df.loc[index, 'processed_path'] = transform_func(row.path, **args)
+    df['processed_path'] = df.path.map(lambda x: transform_func(x, **args))
     return df
 
 
