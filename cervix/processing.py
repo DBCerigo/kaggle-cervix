@@ -82,7 +82,7 @@ def df_to_keras_generator(df, grayscale=None):
     for _, row in df.iterrows():
         onehot = np.zeros(3)
         onehot[int(row['Type'])-1] = 1
-        yield process_image(cv2.imread(x,imread_opt)), onehot
+        yield process_image(cv2.imread(row['processed_path'],imread_opt)), onehot
 
 def append_probabilities(orig_df, preds, type_order):
     type_columns = ['Type_'+t for t in type_order]
