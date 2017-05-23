@@ -25,6 +25,7 @@ jupyter-client==5.0.1
 jupyter-console==5.1.0
 jupyter-core==4.3.0
 Keras==2.0.4
+keras-sequential-ascii==0.1.0
 MarkupSafe==1.0
 matplotlib==2.0.2
 mistune==0.7.4
