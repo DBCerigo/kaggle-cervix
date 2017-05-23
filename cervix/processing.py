@@ -65,10 +65,11 @@ def random_forest_transform(df, img_path_column, grayscale=None):
     return df
 
 def append_probabilities(orig_df, preds, type_order):
-    columns = ['Type_'+t for t in type_order]
+    type_columns = ['Type_'+t for t in type_order]
     index = orig_df.index.values
-    probs_df = pd.DataFrame.from_records(preds, index=index, columns=columns)
-    return orig_df.join(probs_df)
+    probs_df = pd.DataFrame.from_records(preds, index=index, columns=type_columns)
+    orig_df[type_columns] = probs_df[type_columns]
+    return orig_df
 
 def process_image(img):
     """Normalize image and turn into array of one long column"""
