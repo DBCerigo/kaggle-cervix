@@ -26,8 +26,8 @@ def compute_losses(sub_csv_or_df):
     return score, df
 
 def keras_log_loss(y_true, y_pred):
-    clipped_y_pred = K.log(K.clip(y_pred, 1e-15, 1-1e-15))
-    return keras.losses.binary_crossentropy(y_true, clipped_y_pred)
+    clipped_y_pred = K.clip(y_pred, 1e-15, 1-1e-15)
+    return keras.losses.categorical_crossentropy(y_true, clipped_y_pred)
     #Leaving for now incase needed in future
     #weighted_logs = K.multipy(y_true, probability_log)
     #Need to check axis is right
