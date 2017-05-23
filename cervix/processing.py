@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from __future__ import print_function
 import cv2
 import os
@@ -47,7 +48,7 @@ def grayscale_resize(path):
     gray = cv2.cvtColor(rescaled, cv2.COLOR_RGB2GRAY).astype('float')
     return save_img(gray, gray_path)
 
-def resize(path, n=299):
+def resize_n(path, n=299):
     assert isinstance(n, (int)), 'n must be an int'
     resize_path = __make_processed_path(path, 'resize_'+str(n))
     if os.path.exists(resize_path):
@@ -75,13 +76,19 @@ def process_image(img):
     vec = normalized.reshape(1, np.prod(normalized.shape))
     return vec / np.linalg.norm(vec)
 
-def df_to_keras_generator(df, grayscale=None):
+def df_to_keras_generator(df, batch_size, grayscale=None):
     assert isinstance(grayscale, (bool)), 'grayscale must be set to a bool'
     imread_opt = 0 if grayscale else 1 # 1 is 3chan rbg, 0 is grayscale
+
+    batch_features = np.zeros((batch_size, 299, 299, 3))
+    batch_labels = np.zeros(batch_size, 1)
+
     for _, row in df.iterrows():
-        onehot = np.zeros(3)
-        onehot[int(row['Type'])-1] = 1
-        yield process_image(cv2.imread(row['processed_path'],imread_opt)), onehot
+
+        batch_features[0] = cv2.imread(row['processed_path'],imread_opt)
+        batch_labels[0] = int(row['Type'])
+
+        yield batch_features, batch_labels
 
 def append_probabilities(orig_df, preds, type_order):
     type_columns = ['Type_'+t for t in type_order]

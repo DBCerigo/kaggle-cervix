@@ -3,6 +3,8 @@ import math
 import pandas as pd
 import csv
 import os
+import keras
+from keras import backend as K
 
 def _log_prob(p):
     p = max(min(p, 1 - 10**-15), 10**-15)
