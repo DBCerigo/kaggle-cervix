@@ -9,6 +9,7 @@ def save_img(img, path):
     directory = os.path.dirname(path)
     if not os.path.exists(directory):
         os.makedirs(directory)
+    print(path.split('/')[-1].split('.')[0], end=' ')
     cv2.imwrite(path,img)
     return path
     
@@ -42,7 +43,6 @@ def grayscale_resize(path):
     gray_path = __make_processed_path(path, 'grayscale_resize')
     if os.path.exists(gray_path):
         return gray_path
-    print(filename.split('.')[0], end='.')
     img = cv2.imread(path)
     rescaled = cv2.resize(img, (100, 100), cv2.INTER_LINEAR)
     gray = cv2.cvtColor(rescaled, cv2.COLOR_RGB2GRAY).astype('float')
@@ -53,7 +53,6 @@ def resize_n(path, n=299):
     resize_path = __make_processed_path(path, 'resize_'+str(n))
     if os.path.exists(resize_path):
         return resize_path
-    print(filename.split('.')[0], end='.')
     img = cv2.imread(path)
     rescaled = cv2.resize(img, (n, n), cv2.INTER_LINEAR)
     return save_img(rescaled, resize_path)
