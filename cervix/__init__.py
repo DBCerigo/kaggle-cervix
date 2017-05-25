@@ -1,4 +1,4 @@
-import data 
-import submission
-import processing
-import analysis
+from . import data 
+from . import submission
+from . import processing
+from . import analysis
