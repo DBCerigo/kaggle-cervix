@@ -4,6 +4,15 @@ import cv2
 import os
 import pandas as pd
 import numpy as np
+import platform
+
+__processed_path = None
+if 'c001' in platform.node():
+    __processed_path = '../cervix/data/processed/'
+    __subdir_index = 3
+if '.local' in platform.node():
+    __processed_path = '../data/processed/'
+    __subdir_index = 2
 
 def save_img(img, path):
     directory = os.path.dirname(path)
@@ -26,8 +35,8 @@ def __make_processed_path(path, desc):
     filename = os.path.basename(path)
     directories = path.split('/')
     #subdir here is either 'train' or 'test'
-    subdir = directories[2]
-    return '../data/processed/'+desc+'/'+subdir+'/'+filename
+    subdir = directories[__subdir_index]
+    return __processed_path+desc+'/'+subdir+'/'+filename
 
 # should follow format as:
 # EXAMPLE

@@ -3,9 +3,17 @@ from glob import glob
 import matplotlib.pyplot as plt
 import pandas as pd
 import numpy as np
+import platform
+
+__base_path = None
+if 'c001' in platform.node():
+    __base_path = '/data/kaggle/'
+if '.local' in platform.node():
+    __base_path = '../data/'
+
 
 def make_base_df():
-    base_path = '../data/train'
+    base_path = __base_path +'train'
     image_paths = []
     for type_base_path in sorted(glob(base_path +'/*')):
         image_paths = image_paths + glob(type_base_path + '/*')
@@ -16,7 +24,7 @@ def make_base_df():
     return df
 
 def make_test_df():
-    base_path = '../data/test'
+    base_path = __base_path +'test'
     image_paths = glob(base_path+'/*')
     df = pd.DataFrame({'path':image_paths})
     df['num_id'] = df.path.map(lambda x:x.split('/')[-1].split('.')[0])
