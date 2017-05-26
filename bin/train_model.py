@@ -49,7 +49,7 @@ history = model.fit_generator(generator,
 
 history_fp = '/home/u3760/model/history/v3_172_SGD_v2.pk'
 model_fp = '/home/u3760/model/v3_172_SGD_v2.h5'
-if c.analysis.save_history(history, history_fp):
+if c.analysis.save_history(history.history, history_fp):
     print('Model history saved to '+history_fp+'.')
 else:
     print('Model history save to '+history_fp+' failed.')
