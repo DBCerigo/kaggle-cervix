@@ -1,3 +1,4 @@
+import pickle
 import matplotlib.pyplot as plt
 
 def plot_log_errors(history):
@@ -9,4 +10,12 @@ def plot_log_errors(history):
     plt.xlabel('epoch')
     #plt.legend(['train', 'test'], loc='upper left')
     plt.show()
+    
+def save_history(history, fp):
+    try:
+        pickle.dump(history,fp)
+        fp.close()
+        return True
+    except:
+        return False
     
