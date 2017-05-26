@@ -1,6 +1,8 @@
 # exclude contents of data dir
 data/*
+model/*
 # exception for .gitkeepdir file to keep data dir in repo...
+!model/.gitkeepdir
 !data/.gitkeepdir
 !data/dev_submission.csv
 
