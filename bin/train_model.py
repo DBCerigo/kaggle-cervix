@@ -4,7 +4,7 @@ import sys
 from keras.applications.inception_v3 import InceptionV3
 from keras.models import Model
 from keras.layers import Dense, GlobalAveragePooling2D
-base_module_path = os.path.abspath(os.path.join('../cervix'))
+base_module_path = os.path.abspath(os.path.join('../'))
 if base_module_path not in sys.path:
     sys.path.append(base_module_path)
 import cervix as c
