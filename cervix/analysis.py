@@ -1,10 +1,11 @@
 import pickle
 import matplotlib.pyplot as plt
 
-def plot_log_errors(history):
-    plt.plot(history.history['loss'])
-    if 'val_loss' in history.history:
-        plt.plot(history.history['val_loss'])
+def plot_log_errors(history_dict):
+    # using dict as this is the object we will save(pickle)
+    plt.plot(history_dict['loss'])
+    if 'val_loss' in history_dict:
+        plt.plot(history_dict['val_loss'])
     plt.title('model loss')
     plt.ylabel('loss')
     plt.xlabel('epoch')
