@@ -37,7 +37,8 @@ for layer in model.layers[172:]:
 
 # compile the model (should be done *after* setting layers to non-trainable)
 from keras.optimizers import SGD
-model.compile(optimizer=SGD(lr=0.0001, momentum=0.9), loss='categorical_crossentropy')
+model.compile(optimizer=SGD(lr=0.0001, momentum=0.9), 
+              loss='categorical_crossentropy')
 
 # train the model on the new data for a few epochs
 batch_size = 20
