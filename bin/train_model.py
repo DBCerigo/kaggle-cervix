@@ -47,7 +47,7 @@ history = model.fit_generator(generator,
                                     steps_per_epoch=5,
                                     epochs=9)
 
-history_fp = '../model/history/v3_172_SGD_v2.pickle'
+history_fp = '../model/history/v3_172_SGD_v2.pk'
 model_fp = '../model/v3_172_SGD_v2.h5'
 if c.analysis.save_history(history, history_fp):
     print('Model history saved to '+history_fp+'.')
