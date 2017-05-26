@@ -13,8 +13,9 @@ def plot_log_errors(history):
     
 def save_history(history, fp):
     try:
-        pickle.dump(history,fp)
-        fp.close()
+        f = open(fp, 'wb')
+        pickle.dump(history,f)
+        f.close()
         return True
     except:
         return False
