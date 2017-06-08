@@ -44,11 +44,11 @@ model.compile(optimizer=SGD(lr=0.0001, momentum=0.9),
 batch_size = 20
 generator = c.processing.df_to_keras_generator(train,batch_size,grayscale=False)
 history = model.fit_generator(generator,
-                                    steps_per_epoch=5,
-                                    epochs=9)
+                                    steps_per_epoch=len(train)//batch_size+1,
+                                    epochs=20)
 
-history_fp = '/home/u3760/model/history/v3_172_SGD_v2.pk'
-model_fp = '/home/u3760/model/v3_172_SGD_v2.h5'
+history_fp = '/home/u3760/model/history/v3_172_SGD_v3.pk'
+model_fp = '/home/u3760/model/v3_172_SGD_v3.h5'
 if c.analysis.save_history(history.history, history_fp):
     print('Model history saved to '+history_fp+'.')
 else:
