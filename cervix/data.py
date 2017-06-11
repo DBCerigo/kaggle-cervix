@@ -1,5 +1,6 @@
 from __future__ import print_function
 from glob import glob
+import json
 import matplotlib.pyplot as plt
 import pandas as pd
 import numpy as np
@@ -40,6 +41,11 @@ def split_df(df):
     train, validate, test = np.split(df.sample(frac=1, random_state=12), 
                                      [int(.6*len(df)), int(.8*len(df))])
     return train, validate, test
+
+def parse_json(fp):
+    with open(fp, 'rb') as f:
+        config = json.load(f)
+    return config
 
 def check_image(path):
     print(path)

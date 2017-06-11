@@ -9,7 +9,9 @@ if base_module_path not in sys.path:
     sys.path.append(base_module_path)
 import cervix as c
 
-model_path = '/home/u3760/model/v3_172_SGD_v3.h5'
+config = c.data.parse_json('config.json')
+
+model_path = config['submission']['model_path']
 model = load_model(model_path)
 test = c.data.make_test_df()
 test = c.processing.transform_save_imgs(test, c.processing.resize_n, n=299)
@@ -23,5 +25,5 @@ for _, row in test.iterrows():
 predictions = model.predict(test_data)
 test = c.processing.append_probabilities(test, predictions, ['1','2','3'])
 
-sub_path = '/home/u3760/submission_ali.csv'
+sub_path = config['submission']['submission_path']
 c.submission.write_submission_file(sub_path, test)

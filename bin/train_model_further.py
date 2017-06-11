@@ -7,11 +7,13 @@ if base_module_path not in sys.path:
     sys.path.append(base_module_path)
 import cervix as c
 
+config = c.data.parse_json('config.json')
+
 df = c.data.make_base_df()
 train  = c.processing.transform_save_imgs(df, c.processing.resize_n, n=299)
 
-last_model_fp = '/home/u3760/model/v3_172_SGD_v4.h5'
-next_model_fp = '/home/u3760/model/v3_172_SGD_v5.h5'
+last_model_fp = config['further_training']['old_model_path']
+next_model_fp = config['further_training']['new_model_path']
 
 model = load_model(last_model_fp)
 
@@ -21,7 +23,7 @@ history = model.fit_generator(generator,
                                     steps_per_epoch=len(train)//batch_size+1,
                                     epochs=20)
 
-history_fp = '/home/u3760/model/history/v3_172_SGD_v5.pk'
+history_fp = config['further_training']['history_path']
 
 if c.analysis.save_history(history.history, history_fp):
     print('Model history saved to '+history_fp+'.')
