@@ -10,7 +10,7 @@ __processed_path = None
 if 'c001' in platform.node():
     __processed_path = '../cervix/data/processed/'
     __subdir_index = 3
-if '.local' in platform.node():
+else:
     __processed_path = '../data/processed/'
     __subdir_index = 2
 

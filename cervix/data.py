@@ -9,7 +9,7 @@ import platform
 __base_path = None
 if 'c001' in platform.node():
     __base_path = '/data/kaggle/'
-if '.local' in platform.node():
+else:
     __base_path = '../data/'
 
 
