@@ -38,6 +38,11 @@ def get_img_paths_for(directory, num_id_series):
     return s
 
 def split_df(df):
+    train, validate = np.split(df.sample(frac=1, random_state=12),
+                                [int(.9*len(df))])
+    return train, validate
+
+def split_df_with_test(df):
     train, validate, test = np.split(df.sample(frac=1, random_state=12), 
                                      [int(.6*len(df)), int(.8*len(df))])
     return train, validate, test
