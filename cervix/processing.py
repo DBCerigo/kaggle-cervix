@@ -84,6 +84,24 @@ def process_image(img):
     vec = normalized.reshape(1, np.prod(normalized.shape))
     return vec / np.linalg.norm(vec)
 
+def df_to_training_tuples(df, grayscale=None):
+    assert isinstance(grayscale, (bool)), 'grayscale must be set to a bool'
+    imread_opt = 0 if grayscale else 1 # 1 is 3chan rbg, 0 is grayscale
+
+    features = np.zeros((len(df), 299, 299, 3))
+    labels = np.zeros((len(df), 3))
+
+    counter = 0
+    for _,row in df.iterrows():
+        onehot = np.zeros(3)
+        onehot[int(row['Type'])-1] = 1
+
+        features[counter] = cv2.imread(row['processed_path'],imread_opt)
+        labels[counter] = onehot
+        counter += 1
+
+    return features, labels
+
 def df_to_keras_generator(df, batch_size, grayscale=None):
     assert isinstance(grayscale, (bool)), 'grayscale must be set to a bool'
     imread_opt = 0 if grayscale else 1 # 1 is 3chan rbg, 0 is grayscale
