@@ -3,6 +3,7 @@ import math
 import pandas as pd
 import csv
 import os
+from shutil import copyfile
 import keras
 from keras import backend as K
 
@@ -35,8 +36,15 @@ def keras_log_loss(y_true, y_pred):
     #negative_sum_weighted_logs = K.scalar_mul(-1, sum_weighted_logs)
     #return K.mean(negative_sum_weighted_logs, axis=-1)
 
-def write_submission_file(path, df):
-    """Write a submission file from a df with predictions appended"""
+def write_submission_file(path, df, append_to=None):
+    """Write a submission file from a df with predictions. If append_to is set 
+    to a file path, the submission file will append rows to that csv."""
     df['image_name'] = df.path.map(lambda x: os.path.basename(x))
-    df.to_csv(path, columns=['image_name','Type_1','Type_2','Type_3'],
-                index=False)
+    columns = ['image_name','Type_1','Type_2','Type_3']
+    if append_to:
+        copyfile(append_to, path)
+    else:
+        with open(path, 'w') as f:
+            writer = csv.DictWriter(f, fieldnames=columns)
+            writer.writeheader()
+    df.to_csv(path, columns=columns, index=False, header=False, mode='a')

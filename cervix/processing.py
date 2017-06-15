@@ -94,7 +94,8 @@ def df_to_training_tuples(df, grayscale=None):
     counter = 0
     for _,row in df.iterrows():
         onehot = np.zeros(3)
-        onehot[int(row['Type'])-1] = 1
+        if 'Type' in row:
+            onehot[int(row['Type'])-1] = 1
 
         features[counter] = cv2.imread(row['processed_path'],imread_opt)
         labels[counter] = onehot
