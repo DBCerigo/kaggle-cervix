@@ -25,7 +25,7 @@ def make_base_df():
     return df
 
 def make_test_df():
-    base_path = __base_path +'test'
+    base_path = __base_path +'test_stg2'
     image_paths = glob(base_path+'/*')
     df = pd.DataFrame({'path':image_paths})
     df['num_id'] = df.path.map(lambda x:x.split('/')[-1].split('.')[0])
