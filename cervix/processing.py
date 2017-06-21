@@ -90,8 +90,9 @@ def default_img_process(row, grayscale):
 
     return cv2.imread(row['processed_path'], imread_opt)
 
-def df_to_training_tuples(df, img_read=default_img_process, grayscale=None):
-    features = np.zeros((len(df), 299, 299, 3))
+def df_to_training_tuples(df, input_shape, img_read=default_img_process, grayscale=None):
+    features_shape = np.insert(input_shape, 0, len(df))
+    features = np.zeros(features_shape)
     labels = np.zeros((len(df), 3))
 
     counter = 0
