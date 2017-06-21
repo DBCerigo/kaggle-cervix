@@ -84,10 +84,13 @@ def process_image(img):
     vec = normalized.reshape(1, np.prod(normalized.shape))
     return vec / np.linalg.norm(vec)
 
-def df_to_training_tuples(df, grayscale=None):
+def default_img_process(row, grayscale):
     assert isinstance(grayscale, (bool)), 'grayscale must be set to a bool'
     imread_opt = 0 if grayscale else 1 # 1 is 3chan rbg, 0 is grayscale
 
+    return cv2.imread(row['processed_path'], imread_opt)
+
+def df_to_training_tuples(df, img_read=default_img_process, grayscale=None):
     features = np.zeros((len(df), 299, 299, 3))
     labels = np.zeros((len(df), 3))
 
@@ -97,7 +100,7 @@ def df_to_training_tuples(df, grayscale=None):
         if 'Type' in row:
             onehot[int(row['Type'])-1] = 1
 
-        features[counter] = cv2.imread(row['processed_path'],imread_opt)
+        features[counter] = img_read(row, grayscale)
         labels[counter] = onehot
         counter += 1
 
